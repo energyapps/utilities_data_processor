@@ -10,9 +10,9 @@
 	if [[ $DIR == '/home/ec2-user' ]]; then
 		echo "Script running on the EC2 instance"
 		cd work/egallon
-	elif [[ $DIR == '/Users/daniel.wood/Sites/egal-script' ]]; then
-		echo "Script Running Locally"
-		cd /Users/daniel.wood/Sites/egal-script
+	elif [[ $DIR == '/Users/daniel.wood/Sites/egallon_data_processor' ]]; then
+		echo "Script Running Locally"	
+		cd /Users/daniel.wood/Sites/egallon_data_processor
 	else 
 		echo "Unsure where you're running this file, we're going to kill the process"
 		exit

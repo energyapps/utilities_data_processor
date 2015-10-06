@@ -123,8 +123,10 @@ for i in range(0, len(crnt_el)):
 	# edit the string to make it just i
 	eldata['date'] = crnt_el[i]['data'][0]
 	eldata['price'] = crnt_el[i]['data'][1]
-	egallon = (eldata['price']/100) * fuelEconomy * electricEconomy
+	# divide by 100.0 because otherwise rounds down with two integers, returns integer. 
+	egallon = (eldata['price']/100.0) * fuelEconomy * electricEconomy
 	eldata['egallon'] = egallon
+
 
 	oildata['date'] = crnt_oil["US"]['data'][0]	
 
