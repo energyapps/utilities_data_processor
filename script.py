@@ -4,6 +4,7 @@ import simplejson as json
 import time
 
 date = time.strftime("%y-%m-%d")
+date2 = time.strftime("%B %d, %Y")
 url = 'http://api.eia.gov/series/?api_key='
 APIkey = 'F6142C90B4401CFEF6C359B6BC23EBC2'
 fuelEconomy = 27.9 # average US Fuel economy (mpg) updated August 2015
@@ -27,7 +28,7 @@ crnt_el_master["states"] = {}
 crnt_el = crnt_el_master["states"]
 
 crnt_combo_master = json.loads(current)
-crnt_combo_master["dateGenerated"] = date
+crnt_combo_master["dateGenerated"] = date2
 crnt_combo_master["states"] = {}
 crnt_combined = crnt_combo_master["states"]
 
