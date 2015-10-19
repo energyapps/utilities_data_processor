@@ -3,6 +3,7 @@
 import simplejson as json
 import time
 import inspect
+from tabulate import tabulate
 
 def lineno():
     # """Returns the current line number in our program."""
@@ -31,12 +32,15 @@ if len(data['states']) != 52:
 
 oil_price = []
 el_price = []
+name_list = []
 diff = []
+tabular = []
 
 # for i in range(0, len(meta_oil)):
 for x in range(0, len(data['states'])):
 	o = str(x)
 	cur = data['states'][o]['data']
+	name_list.append(data['states'][o]['name'])
 	oil_price.append(cur['oil']['price'])
 	el_price.append(cur['electricity']['egallon'])
 	diff.append(oil_price[x] - el_price[x])
@@ -46,6 +50,7 @@ for x in range(0, len(data['states'])):
 	if el_price[x] < 0.5:
 		print "!!!!Warning there are egallon values below $0.5 in " + data['states'][o]['name'] + ": " + str(cur['electricity']['egallon'])+ "!!!" + lineno()
 		print
+	tabular.append([name_list[x], oil_price[x], el_price[x], diff[x]])
 
 # Oil Prices
 #  Date of records
@@ -58,10 +63,8 @@ if len(oil_price) != 52:
 	print
 print "Oil Price Statistics"
 print "Date Oil Data produced: " + data['states']['0']['data']['oil']['date']
-print "The minimum: $" + str(min(oil_price))
-print "Region: " + data['states'][str(oil_price.index(min(oil_price)))]['data']['oil']['region']
-print "The maximum: $" + str(max(oil_price))
-print "Region: " + data['states'][str(oil_price.index(max(oil_price)))]['data']['oil']['region']
+print "The minimum: $" + str(min(oil_price)) + " | Region: " + data['states'][str(oil_price.index(min(oil_price)))]['data']['oil']['region']
+print "The maximum: $" + str(max(oil_price)) + " | Region: " + data['states'][str(oil_price.index(max(oil_price)))]['data']['oil']['region']
 print "The average: $" + str(sum(oil_price)/len(oil_price))
 
 # Electricity Prices
@@ -75,10 +78,8 @@ if len(el_price) != 52:
 	print
 print "Egallon Price Statistics"
 print "Date Electricity Data produced: " + data['states']['0']['data']['electricity']['date']
-print "The minimum: $" + str(min(el_price))
-print "State: " + data['states'][str(el_price.index(min(el_price)))]['name']
-print "The maximum: $" + str(max(el_price))
-print "State: " + data['states'][str(el_price.index(max(el_price)))]['name']
+print "The minimum: $" + str(min(el_price)) + " | State: " + data['states'][str(el_price.index(min(el_price)))]['name']
+print "The maximum: $" + str(max(el_price)) + " | State: " + data['states'][str(el_price.index(max(el_price)))]['name']
 print "The average: $" + str(sum(el_price)/len(el_price))
 print
 
@@ -95,15 +96,10 @@ print "2) " + data['states'][str(diffIndexSorted[50])]['name'] + ": $" + str(dif
 print "3) " + data['states'][str(diffIndexSorted[49])]['name'] + ": $" + str(diff[diffIndexSorted[49]])
 print
 print "The average difference between oil price and egallon price: $" + str(sum(diff)/len(diff)) 
-# Largest Difference between states (top 3)
-# Smallest Difference between states (bottom 3)
-# Average Difference factor
 
-# Any zeros values in oil?
-# Any zeros values in electricity?
-# End in zeros? not as important
-
-#Append everything to the output.log
+# Print out the tabular data
+print tabulate(tabular, headers=['state','oil','egallon','diff'], tablefmt="pipe") 
 print
 print "End of Diagnostic Script"
 print
+
