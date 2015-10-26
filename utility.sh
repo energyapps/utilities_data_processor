@@ -7,23 +7,22 @@
 # Please replace this logic with whatever makes sense for our architecture.
 ###################################
 
-	if [[ $DIR == '/home/ec2-user' ]]; then
-		echo "Script running on the EC2 instance"
-		cd work/egallon
-	elif [[ $DIR == '/Users/daniel.wood/Sites/egallon_data_processor' ]]; then
-		echo "Script Running Locally"	
-		cd /Users/daniel.wood/Sites/egallon_data_processor
-	else 
-		echo "Unsure where you're running this file, we're going to kill the process"
-		exit
-	fi
+	# if [[ $DIR == '/home/ec2-user' ]]; then
+	# 	echo "Script running on the EC2 instance"
+	# 	cd work/egallon
+	# elif [[ $DIR == '/Users/daniel.wood/Sites/egallon_data_processor' ]]; then
+	# 	echo "Script Running Locally"	
+	# 	cd /Users/daniel.wood/Sites/egallon_data_processor
+	# else 
+	# 	echo "Unsure where you're running this file, we're going to kill the process"
+	# 	exit
+	# fi
 
 ############################ End logic ###############################
 
-RunEgallonProcess() {	
-#Log the Time
+RunUtilityProcess() {	
 	echo
-	echo 'Download and Process Egallon Data and Push it the correct place'
+	echo 'Download and Process Utility Data and Push it the correct place'
 	echo
 	date
 	echo
@@ -41,11 +40,13 @@ Diagnostic() {
 }
 
 # Run the process and send the output to a log file. 
-RunEgallonProcess 2>&1 | tee -a output_archive.log 
+# RunUtilityProcess 2>&1 | tee -a output_archive.log 
+RunUtilityProcess
 
 # Clear the output.log
 > output.log
 Diagnostic 2>&1 | tee -a output.log | tee -a output_archive.log
+Diagnostic
 
 ############Chauncey###############
 # At this point, it would be great to send an email of output.log to daniel.wood@hq.doe.gov
